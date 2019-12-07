@@ -3,10 +3,10 @@
   * PHP IO FOR READING JSON DATA
   * Exercício de Desenvolvimento de Aplicação / CRUD SIMPLES USANDO JSON COMO UM 'DB'
   * Aluno: Natan Pires de Souza
-  * Git: https://github.com/ztodev/
+  * Git: https://github.com/ztodev/crud_json
   */
 
-  $file = file_get_contents('db.json');
+  $file = file_get_contents('./ajax/db.json');
   $data = json_decode($file, true);
 ?>
 <!DOCTYPE html>
@@ -28,16 +28,22 @@
           <tr>
             <th>Nome</th>
             <th>E-mail</th>
+            <th>Senha</th>
             <th>RA</th>
             <th class="tb_options">Ações</th>
           </tr>
-<?php foreach($data['data'] as $key => $c): ?>
+<?php 
+if ($data['data']):
+foreach($data['data'] as $key => $c): ?>
           <tr>          
             <td>
               <input type="text" class="td-input" name="nome" id="nome<?=$c['id']?>" value="<?=$c['nome']?>" required/>
             </td>
-           <td>
+            <td>
               <input type="text" class="td-input" name="email" id="email<?=$c['id']?>" value="<?=$c['email']?>" required/>
+            </td>
+            <td>
+              <input type="text" class="td-input" name="senha" id="senha<?=$c['id']?>" value="<?=$c['senha']?>" required/>
             </td>
             <td>
               <input type="text" class="td-input ra" maxlength="10" name="ra" id="ra<?=$c['id']?>" value="<?=$c['ra']?>" required/>
@@ -47,7 +53,9 @@
               <a href="javascript:remover(<?=$c['id']?>)">REMOVER</a>
             </td>          
           </tr>
-<?php endforeach; ?>          
+<?php 
+endforeach; 
+endif; ?>          
         </table>    
       </div>
       <div class="form_fields">
@@ -64,6 +72,12 @@
               <span>E-mail</span>
             </label>
             <input type="text" name="email_new" id="email_new" required/>
+          </div>
+          <div class="input">
+            <label for="senha_new">
+              <span>Senha</span>
+            </label>
+            <input type="password" name="senha_new" id="senha_new" required/>
           </div>
           <div class="input">
             <label for="ra_new">
